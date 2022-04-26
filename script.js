@@ -1,8 +1,10 @@
 'use strict';
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = getSecretNumber();
 
 let gameScore = 20;
+
+let highScore = 0;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
@@ -21,6 +23,11 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('.number').style.width = '30rem';
 
     document.querySelector('.number').textContent = secretNumber;
+
+    if (gameScore > highScore) {
+      highScore = gameScore;
+      document.querySelector('.highscore').textContent = highScore;
+    }
 
     // When guess is too high
   } else if (guess > secretNumber) {
@@ -42,3 +49,19 @@ document.querySelector('.check').addEventListener('click', function () {
 
   // FIXME: Stop the game when score = 0
 });
+
+document.querySelector('.again').addEventListener('click', function () {
+  gameScore = 20;
+  secretNumber = getSecretNumber();
+
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('.guess').value = '';
+  document.querySelector('.message').textContent = 'Start guessing...';
+  document.querySelector('.score').textContent = gameScore;
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
+});
+
+function getSecretNumber() {
+  return Math.trunc(Math.random() * 20) + 1;
+}
