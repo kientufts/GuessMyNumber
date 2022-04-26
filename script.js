@@ -4,6 +4,8 @@ let secretNumber = getSecretNumber();
 
 let gameScore = 20;
 
+let highScore = 0;
+
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
   console.log(guess, typeof guess);
@@ -21,6 +23,11 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('.number').style.width = '30rem';
 
     document.querySelector('.number').textContent = secretNumber;
+
+    if (gameScore > highScore) {
+      highScore = gameScore;
+      document.querySelector('.highscore').textContent = highScore;
+    }
 
     // When guess is too high
   } else if (guess > secretNumber) {
